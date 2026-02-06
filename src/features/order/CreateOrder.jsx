@@ -2,10 +2,12 @@ import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../Button";
 import { useDispatch, useSelector } from "react-redux";
-import { getCart, getCartPrice } from "../cart/cartSlice";
-import { useRef, useState } from "react";
+import { clearCart, getCart, getCartPrice } from "../cart/cartSlice";
+import { useState } from "react";
 import { formatCurrency } from "../../utils/helpers";
 import { fetchAddress } from "../user/userSlice";
+
+import store from "../../store";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -148,8 +150,6 @@ export async function action({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
-  console.log(data);
-
   const order = {
     ...data,
     cart: JSON.parse(data.cart),
@@ -164,6 +164,9 @@ export async function action({ request }) {
   if (Object.keys(errors).length > 0) return errors;
 
   const newOrder = await createOrder(order);
+
+  // Don't overuse
+  store.dispatch(clearCart());
 
   return redirect(`/order/${newOrder.id}`);
 }

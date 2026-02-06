@@ -12,11 +12,11 @@ function CartItem({ item }) {
   const dispatch = useDispatch();
 
   return (
-    <li className="flex items-center justify-between py-3">
+    <li className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between">
       <p>
         {quantity}&times; {name}
       </p>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between gap-4 sm:justify-normal">
         <p className="text-sm font-semibold">{formatCurrency(totalPrice)}</p>
 
         <UpdateItemQuantity
