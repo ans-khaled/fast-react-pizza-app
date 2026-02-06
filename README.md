@@ -16,6 +16,7 @@ Users can:
 - Place an order with basic information
 - Track their order using a unique order ID
 - Mark orders as **priority** (with extra cost)
+- Live search while typing
 
 ---
 
